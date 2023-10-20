@@ -1,0 +1,55 @@
+{
+  "type": "module",
+  "name": "nuxt-i18n-utilities",
+  "version": "0.0.5",
+  "description": "A set of utilities for automatically collecting translation keys, and automatically translating these keys",
+  "author": {
+    "name": "Leon Sadeness",
+    "email": "sadenessleon@mail.ru",
+    "url": "http://leonsadeness.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LeonSadeness/nuxt-i18n-utilities"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "src"
+  ],
+  "exports": {
+    "./config": "./src/Config/defineConfig.cjs"
+  },
+  "scripts": {
+    "i18nu-init": "npx i18nu-init",
+    "i18nu-parse": "npx i18nu-parse",
+    "i18nu-translate": "npx i18nu-translate",
+    "compile": "babel src --out-dir lib",
+    "release": "npm publish"
+  },
+  "bin": {
+    "i18nu-init": "./src/cmd/init.js",
+    "i18nu-parse": "./src/cmd/parse.js",
+    "i18nu-translate": "./src/cmd/translate.js"
+  },
+  "dependencies": {
+    "@google-cloud/translate": "^6.0.3",
+    "consola": "^3.2.3",
+    "minimatch": "^9.0.3"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "nuxt3",
+    "nuxt-module",
+    "i18n",
+    "translate",
+    "cli",
+    "node",
+    "nodejs"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}
