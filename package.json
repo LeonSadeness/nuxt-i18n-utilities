@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "nuxt-i18n-utilities",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "A set of utilities for automatically collecting translation keys, and automatically translating these keys",
   "author": {
     "name": "Leon Sadeness",
@@ -22,10 +22,9 @@
     "./config": "./src/Config/defineConfig.cjs"
   },
   "scripts": {
-    "i18nu-translate": "npx i18nu-translate",
     "i18nu-init": "npx i18nu-init",
     "i18nu-parse": "npx i18nu-parse",
-    "release": "npm publish"
+    "i18nu-translate": "npx i18nu-translate"
   },
   "bin": {
     "i18nu-init": "./src/cmd/init.js",

@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     descriptionData() {
-      return this.description || this.$t('No description');
+      return this.description || this.$t('There are no users with this email. Please register');
     }
   },
 };
