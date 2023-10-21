@@ -19,5 +19,6 @@ module.exports = defineI18nUtilitiesConfig({
       code: 'ru',
       file: 'ru.json'
     },
-  ]   
+  ],
+  googleProjectId: null
 });
