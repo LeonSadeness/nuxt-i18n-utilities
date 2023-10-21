@@ -1,4 +1,5 @@
 import axios from "axios";
+import consola from "consola";
 import querystring from "querystring";
 import { v2 } from "@google-cloud/translate";
 
@@ -62,7 +63,17 @@ export default class Translator {
     let response;
     try {
       response = await axios.get(url, requestOptions);
-      return response.data?.[0]?.[0]?.[0] ?? null;
+
+      let translated = "";
+      if (response.data?.[0]?.[0]?.[0]) {
+        for (const phrase of response.data[0]) {
+          if (typeof phrase[0] === "string" || phrase[0] instanceof String) {
+            translated += phrase[0];
+          }
+        }
+      }
+
+      return translated.length ? translated : null;
     } catch (err) {
       consola.error(err.message);
       return null;
