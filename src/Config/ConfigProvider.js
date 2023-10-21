@@ -6,22 +6,22 @@ import { fileURLToPath, pathToFileURL } from "url";
 export const fileNameConfig = "i18n-utilities.config.js";
 
 /**
- * Загружает конфигурацию из указанной дирректории.
- * Если дирректория не указан, загружает конфигурацию из дирректории вызова скрипта.
- * @param {string} dir - дирректория в которой хранится конфигурация
- * @returns {Promise<i18nUtilitiesConfig>}
+ * Load the configuration from the specified directory.
+ * If the directory is not specified, loads the configuration from the script calling directory.
+ * @param {string | null} dir - directory in which the configuration is stored
+ * @returns {Promise<import('../Config/defineConfig.cjs').i18nUtilitiesConfig>}
  */
-export const LoadConfig = async (dir) => {
+export const LoadConfig = async (dir = null) => {
   let result = null;
 
   let dirConfig = process.cwd();
-  if (fs.existsSync(dir)) {
+  if (dir && fs.existsSync(dir)) {
     dirConfig = dir;
   }
 
   const file = path.join(dirConfig, fileNameConfig);
   if (!fs.existsSync(file)) {
-    consola.error(`Файл конфигурации (${fileNameConfig}) не найден.`);
+    consola.error(`Configuration file (${fileNameConfig}) not found.`);
     return result;
   }
 
@@ -32,9 +32,9 @@ export const LoadConfig = async (dir) => {
 };
 
 /**
- * Создает базовую конфигурацию в указанной дирректории.
- * Если дирректория не указан, создает конфигурацию в дирректории вызова скрипта.
- * @param {string} dir - дирректория для создания в ней стартовой конфигурации
+ * Creates a basic configuration in the specified directory.
+ * If directory is not specified, creates the configuration in the directory where the script is called.
+ * @param {string} dir - directory for creating a starting configuration in it
  */
 export const CreateConfig = (dir) => {
   let dirConfig = process.cwd();
@@ -59,7 +59,7 @@ export const CreateConfig = (dir) => {
       encoding: "utf8",
     });
   } catch (error) {
-    consola.error(`Read example config - ${err}`);
+    consola.error(`Read example config - ${error.message}`);
     return false;
   }
 
@@ -69,7 +69,7 @@ export const CreateConfig = (dir) => {
 
     return true;
   } catch (error) {
-    consola.error(`Write config - ${error}`);
+    consola.error(`Write config - ${error.message}`);
 
     return false;
   }

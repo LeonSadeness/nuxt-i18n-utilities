@@ -18,13 +18,33 @@ export default class ParserKeys {
           regex.lastIndex++;
         }
 
-        this.result.push(m[1]);
+        if (!this.result.includes(m[1])) {
+          this.result.push(m[1]);
+        }
       }
     }
 
     this.result.sort((a, b) => a.localeCompare(b));
 
     return this;
+  }
+
+  MergeResultWithJson(json) {
+    let obj = JSON.parse(json);
+    if (typeof obj === "object" && !Array.isArray(obj) && obj !== null) {
+      let arr = Object.keys(obj);
+      this.MergeResultWithArray(arr);
+    }
+  }
+
+  MergeResultWithArray(arr) {
+    arr.forEach((item) => {
+      if (!this.result.includes(item)) {
+        this.result.push(item);
+      }
+    });
+
+    this.result.sort((a, b) => a.localeCompare(b));
   }
 
   ToJson(valueIsKey = true) {

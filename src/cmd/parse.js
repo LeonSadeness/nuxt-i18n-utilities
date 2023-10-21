@@ -59,7 +59,7 @@ const ParseCommand = async () => {
 
   let relativeWritePath = path.join(config.langDir, defaultLocale.file);
   let isWriteConfirm = await consola.prompt(
-    `Write the collected keys as the default locale(\x1b[33m${config.sourceLanguage}\x1b[0m) to the file "\x1b[33m${relativeWritePath}\x1b[0m"?\nIf the file already exists, it will be overwritten ❗❗❗\nThe end result will be:\x1b[33m\n{\n\x1b[32m"first key"\x1b[0m: \x1b[32m"first key"\x1b[0m,\n\x1b[32m"second key"\x1b[0m: \x1b[32m"second key"\x1b[0m,\n...\n\x1b[32m"some key"\x1b[0m: \x1b[32m"some key"\x1b[33m\n}\x1b[0m`,
+    `Write the collected keys as the default locale(\x1b[33m${config.sourceLanguage}\x1b[0m) to the file "\x1b[33m${relativeWritePath}\x1b[0m"?\nIf the file already exists, it will be supplemented with the missing keys.\nThe end result will be:\x1b[33m\n{\n\x1b[32m"first key"\x1b[0m: \x1b[32m"first key"\x1b[0m,\n\x1b[32m"second key"\x1b[0m: \x1b[32m"second key"\x1b[0m,\n...\n\x1b[32m"some key"\x1b[0m: \x1b[32m"some key"\x1b[33m\n}\x1b[0m`,
     { type: "confirm" }
   );
   // #endregion
@@ -67,21 +67,39 @@ const ParseCommand = async () => {
   // #region Write
   if (isWriteConfirm) {
     let writeDir = path.join(process.cwd(), config.langDir);
-    let writePath = path.join(writeDir, defaultLocale.file);
+    let writeFile = path.join(writeDir, defaultLocale.file);
 
+    // Check dir is not exist
     if (!fs.existsSync(writeDir)) {
       fs.mkdir(writeDir, (err) => {
         if (err) consola.error(err);
       });
     }
 
+    // Check file exist
+    let content = "";
+
+    if (fs.existsSync(writeFile)) {
+      try {
+        let json = fs.readFileSync(writeFile, { flag: "r", encoding: "utf8" });
+        content = parser.MergeResultWithJson(json);
+      } catch (error) {
+        consola.error(error.message);
+      }
+    }
+    else{
+      content = parser.ToJson();
+    }
+
     try {
-      fs.writeFileSync(writePath, parser.ToJson(), {
+      fs.writeFileSync(writeFile, content, {
         flag: "w",
         encoding: "utf8",
       });
       consola.log(`\n`);
-      consola.success(`The file "\x1b[33m${defaultLocale.file}\x1b[0m" was successfully written.\n`)
+      consola.success(
+        `The file "\x1b[33m${defaultLocale.file}\x1b[0m" was successfully written.\n`
+      );
     } catch (error) {
       consola.error(error);
     }
