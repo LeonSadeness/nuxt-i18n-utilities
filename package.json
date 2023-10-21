@@ -22,10 +22,9 @@
     "./config": "./src/Config/defineConfig.cjs"
   },
   "scripts": {
+    "i18nu-translate": "npx i18nu-translate",
     "i18nu-init": "npx i18nu-init",
     "i18nu-parse": "npx i18nu-parse",
-    "i18nu-translate": "npx i18nu-translate",
-    "compile": "babel src --out-dir lib",
     "release": "npm publish"
   },
   "bin": {
@@ -35,10 +34,10 @@
   },
   "dependencies": {
     "@google-cloud/translate": "^6.0.3",
+    "axios": "^1.5.1",
     "consola": "^3.2.3",
     "minimatch": "^9.0.3"
   },
-  "devDependencies": {},
   "keywords": [
     "nuxt3",
     "nuxt-module",
