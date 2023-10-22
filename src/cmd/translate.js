@@ -85,8 +85,16 @@ const TranslateCommand = async () => {
         for (const key in translated) {
           objLocale[key] = translated[key];
         }
-        resultJson.sort((a, b) => a.localeCompare(b));
-        resultJson = JSON.stringify(objLocale, null, "\t");
+        
+        const objLocaleSorted = Object.keys(objLocale).sort().reduce(
+          (obj, key) => { 
+            obj[key] = objLocale[key]; 
+            return obj;
+          }, 
+          {}
+        );
+
+        resultJson = JSON.stringify(objLocaleSorted, null, "\t");
       } catch (error) {
         consola.error(error.message);
         return;
