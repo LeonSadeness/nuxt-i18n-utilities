@@ -5,7 +5,7 @@ export default class ParserKeys {
 
   ParseTranslationKey(files) {
     this.result = [];
-    const regex = /[ ]*[^\w]t\([ \n\r]*[\'\""](?<key>.*?)[\'\""][ \n\r]*\)/gm;
+    const regex = /[ ]*[^\w]t\([ \n\r]*['"`](?<key>.*?)['"`][ \n\r]*\)/gm;
     let m;
 
     for (let i = 0; i < files.length; i++) {
@@ -33,7 +33,7 @@ export default class ParserKeys {
     let obj = JSON.parse(json);
     if (typeof obj === "object" && !Array.isArray(obj) && obj !== null) {
       let arr = Object.keys(obj);
-      this.MergeResultWithArray(arr);
+      return this.MergeResultWithArray(arr);
     }
   }
 
