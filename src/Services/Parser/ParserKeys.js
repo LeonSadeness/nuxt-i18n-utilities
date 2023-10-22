@@ -33,18 +33,21 @@ export default class ParserKeys {
     let obj = JSON.parse(json);
     if (typeof obj === "object" && !Array.isArray(obj) && obj !== null) {
       let arr = Object.keys(obj);
-      return this.MergeResultWithArray(arr);
+      this.MergeResultWithArray(arr);
     }
-  }
 
+    return this;
+  }
+  
   MergeResultWithArray(arr) {
     arr.forEach((item) => {
       if (!this.result.includes(item)) {
         this.result.push(item);
       }
     });
-
+    
     this.result.sort((a, b) => a.localeCompare(b));
+    return this;
   }
 
   ToJson(valueIsKey = true) {

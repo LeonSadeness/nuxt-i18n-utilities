@@ -82,7 +82,7 @@ const ParseCommand = async () => {
     if (fs.existsSync(writeFile)) {
       try {
         let json = fs.readFileSync(writeFile, { flag: "r", encoding: "utf8" });
-        content = parser.MergeResultWithJson(json);
+        content = parser.MergeResultWithJson(json).ToJson();
       } catch (error) {
         consola.error(error.message);
       }
